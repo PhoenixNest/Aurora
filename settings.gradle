@@ -1,0 +1,2 @@
+rootProject.name='Aurora'
+include ':app'

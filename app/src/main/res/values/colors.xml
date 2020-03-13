@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="foodColor">#FFA000</color>
+    <color name="drinkColor">#1976d2</color>
+    <color name="viewColor">#00bfa5</color>
+    <color name="libraryColor">#00897b</color>
+    <color name="shoppingColor">#e53935</color>
+    <color name="sportColor">#ff7043</color>
+    <color name="healthColor">#8e24aa</color>
+    <color name="trafficColor">#795548</color>
+
+</resources>

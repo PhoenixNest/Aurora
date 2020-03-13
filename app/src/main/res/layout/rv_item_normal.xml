@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.amap.api.services.core.PoiItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivPoi"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvPoiName"
+            app:layout_constraintTop_toTopOf="@+id/tvPoiName"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvPoiDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="bottom"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvType"
+            app:layout_constraintEnd_toEndOf="@+id/tvPoiName"
+            app:layout_constraintStart_toEndOf="@+id/tvType"
+            app:layout_constraintTop_toTopOf="@+id/tvType"
+            tools:text="900m" />
+
+        <TextView
+            android:id="@+id/tvPoiRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvRating"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rbPoi"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvType"
+            app:layout_constraintTop_toBottomOf="@+id/tvType" />
+
+        <TextView
+            android:id="@+id/tvPoiName"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="@{data.title}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvPoiDistance"
+            app:layout_constraintEnd_toStartOf="@+id/ivPoi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="肯德基" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="@{data.typeDes}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvPoiRating"
+            app:layout_constraintEnd_toStartOf="@+id/tvPoiDistance"
+            app:layout_constraintStart_toStartOf="@+id/tvPoiName"
+            app:layout_constraintTop_toBottomOf="@+id/tvPoiName"
+            tools:text="餐饮" />
+
+        <RatingBar
+            android:id="@+id/rbPoi"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:max="5"
+            android:progressTint="#F4511E"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPoiRating"
+            app:layout_constraintStart_toEndOf="@+id/tvPoiRating"
+            app:layout_constraintTop_toTopOf="@+id/tvPoiRating" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

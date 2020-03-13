@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consCoffeeBS"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        app:behavior_peekHeight="?actionBarSize"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        tools:context=".fragment.CoffeeMainFragment">
+
+        <ImageView
+            android:id="@+id/ivBSStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu_gray_24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.09" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivBSStatus">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbFoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        app:backgroundTint="@color/foodColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvFoods"
+                        app:layout_constraintEnd_toStartOf="@+id/fbDrink"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_food_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbDrink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/drinkColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbFoods"
+                        app:layout_constraintEnd_toStartOf="@+id/fbHotel"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbFoods"
+                        app:layout_constraintTop_toTopOf="@+id/fbFoods"
+                        app:srcCompat="@drawable/ic_local_drink_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbHotel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/viewColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbDrink"
+                        app:layout_constraintEnd_toStartOf="@+id/fbViews"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbDrink"
+                        app:layout_constraintTop_toTopOf="@+id/fbDrink"
+                        app:srcCompat="@drawable/ic_hotel_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbShopping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp"
+                        app:backgroundTint="@color/shoppingColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvShopping"
+                        app:layout_constraintEnd_toStartOf="@+id/fbSport"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvFoods"
+                        app:srcCompat="@drawable/ic_local_shop_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbTraffic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/trafficColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbHealth"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbHealth"
+                        app:layout_constraintTop_toTopOf="@+id/fbHealth"
+                        app:srcCompat="@drawable/ic_local_traffic_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbHealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/healthColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbSport"
+                        app:layout_constraintEnd_toStartOf="@+id/fbTraffic"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbSport"
+                        app:layout_constraintTop_toTopOf="@+id/fbSport"
+                        app:srcCompat="@drawable/ic_health_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/libraryColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbHotel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbHotel"
+                        app:layout_constraintTop_toTopOf="@+id/fbHotel"
+                        app:srcCompat="@drawable/ic_terrain_white_36dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbSport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:backgroundTint="@color/sportColor"
+                        app:elevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/fbShopping"
+                        app:layout_constraintEnd_toStartOf="@+id/fbHealth"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/fbShopping"
+                        app:layout_constraintTop_toTopOf="@+id/fbShopping"
+                        app:srcCompat="@drawable/ic_sport_white_36dp" />
+
+                    <TextView
+                        android:id="@+id/tvFoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/foods"
+                        app:layout_constraintBottom_toTopOf="@+id/fbShopping"
+                        app:layout_constraintEnd_toEndOf="@+id/fbFoods"
+                        app:layout_constraintStart_toStartOf="@+id/fbFoods"
+                        app:layout_constraintTop_toBottomOf="@+id/fbFoods" />
+
+                    <TextView
+                        android:id="@+id/tvDrink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/drinks"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvFoods"
+                        app:layout_constraintEnd_toEndOf="@+id/fbDrink"
+                        app:layout_constraintStart_toStartOf="@+id/fbDrink"
+                        app:layout_constraintTop_toTopOf="@+id/tvFoods" />
+
+                    <TextView
+                        android:id="@+id/tvViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hotel"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvDrink"
+                        app:layout_constraintEnd_toEndOf="@+id/fbHotel"
+                        app:layout_constraintStart_toStartOf="@+id/fbHotel"
+                        app:layout_constraintTop_toTopOf="@+id/tvDrink" />
+
+                    <TextView
+                        android:id="@+id/tvLibrary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvViews"
+                        app:layout_constraintEnd_toEndOf="@+id/fbViews"
+                        app:layout_constraintStart_toStartOf="@+id/fbViews"
+                        app:layout_constraintTop_toTopOf="@+id/tvViews" />
+
+                    <TextView
+                        android:id="@+id/tvShopping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/shopping"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/fbShopping"
+                        app:layout_constraintStart_toStartOf="@+id/fbShopping"
+                        app:layout_constraintTop_toBottomOf="@+id/fbShopping" />
+
+                    <TextView
+                        android:id="@+id/tvSport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sport"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvShopping"
+                        app:layout_constraintEnd_toEndOf="@+id/fbSport"
+                        app:layout_constraintStart_toStartOf="@+id/fbSport"
+                        app:layout_constraintTop_toTopOf="@+id/tvShopping" />
+
+                    <TextView
+                        android:id="@+id/tvHealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSport"
+                        app:layout_constraintEnd_toEndOf="@+id/fbHealth"
+                        app:layout_constraintStart_toStartOf="@+id/fbHealth"
+                        app:layout_constraintTop_toTopOf="@+id/tvSport" />
+
+                    <TextView
+                        android:id="@+id/tvTraffic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trafficService"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvHealth"
+                        app:layout_constraintEnd_toEndOf="@+id/fbTraffic"
+                        app:layout_constraintStart_toStartOf="@+id/fbTraffic"
+                        app:layout_constraintTop_toTopOf="@+id/tvHealth" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBSCoffee"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
