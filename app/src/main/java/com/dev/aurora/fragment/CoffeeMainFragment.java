@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,13 +36,13 @@ import com.dev.aurora.utils.ConstUtils;
 import com.dev.aurora.utils.MsgUtils;
 import com.dev.aurora.utils.SysUtils;
 import com.dev.aurora.viewmodel.CoffeeViewModel;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.List;
 
 public class CoffeeMainFragment extends Fragment implements View.OnClickListener, LocationSource,
         AMap.OnMapTouchListener, AMap.OnCameraChangeListener {
 
+    private CoordinatorLayout.LayoutParams layoutParams;
 
     private boolean followTouch;
 
@@ -60,7 +60,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
 
     private RVPoiAdapter poiAdapter;
     private LatLng latLng;
-    private LiveData<List<PoiItem>> poiLiveData;
+    private List<PoiItem> itemList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         binding.setCoffeeFragment(this);
         binding.mapView.onCreate(savedInstanceState);
 
+        initTopView();
         initBottomView();
         initEvent();
         return binding.getRoot();
@@ -125,9 +126,24 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         aMap.setMyLocationEnabled(true);
     }
 
+    private void initTopView() {
+        layoutParams = (CoordinatorLayout.LayoutParams) binding.coffeeNestedScrollView.getLayoutParams();
+        binding.coffeeNestedScrollView.setLayoutParams(this.layoutParams);
+        binding.coffeeAppBarLayout.addOnOffsetChangedListener((appBarLayout, i) -> {
+            binding.coffeeNestedScrollView.setLayoutParams(this.layoutParams);
+            if (Math.abs(i) > 0) {
+                float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
+                appBarLayout.setAlpha(alpha);
+                binding.coffeeNestedScrollView.getBackground().mutate().setAlpha(Math.round(alpha * 255));
+            } else {
+                appBarLayout.setAlpha(0);
+                binding.coffeeNestedScrollView.getBackground().mutate().setAlpha(0);
+            }
+        });
+
+    }
+
     private void initBottomView() {
-        BottomSheetBehavior<ViewGroup> behavior = BottomSheetBehavior.from(binding.includeBottom.consCoffeeBS);
-        behavior.setHideable(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.includeBottom.rvBSCoffee.setLayoutManager(layoutManager);
@@ -203,16 +219,17 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
     }
 
     private void getPoiList(String poiType) {
-        poiLiveData = mViewModel.getPoiLiveData(requireActivity(), 0, poiType, cityCode, new LatLonPoint(latLng.latitude, latLng.longitude));
-        poiLiveData.observe(this, poiItems -> {
-            poiAdapter.submitList(poiItems);
-            poiAdapter.setListener(position -> {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(ConstUtils.KEY_poiItem, poiAdapter.getPoiItemList().get(position));
-                Navigation.findNavController(binding.includeBottom.rvBSCoffee)
-                        .navigate(R.id.action_coffeeFragment_to_coffeeDetailsFragment, bundle);
-            });
-        });
+        mViewModel.getPoiLiveData(requireActivity(), 0, poiType, cityCode, new LatLonPoint(latLng.latitude, latLng.longitude))
+                .observe(getViewLifecycleOwner(), poiItems -> {
+                    itemList = poiItems;
+                    poiAdapter.submitList(itemList);
+                    poiAdapter.setListener(position -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(ConstUtils.KEY_poiItem, poiAdapter.getPoiItemList().get(position));
+                        Navigation.findNavController(binding.includeBottom.rvBSCoffee)
+                                .navigate(R.id.action_coffeeFragment_to_coffeeDetailsFragment, bundle);
+                    });
+                });
     }
 
     @Override

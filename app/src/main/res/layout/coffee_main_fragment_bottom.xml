@@ -12,9 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:elevation="8dp"
-        app:behavior_peekHeight="?actionBarSize"
-        app:layout_behavior="@string/bottom_sheet_behavior"
         tools:context=".fragment.CoffeeMainFragment">
 
         <ImageView
@@ -264,4 +261,5 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
