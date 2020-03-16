@@ -15,6 +15,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 
@@ -26,7 +27,8 @@ public class CoffeeViewModel extends ViewModel {
 
     private SavedStateHandle handle;
     private MutableLiveData<AMapLocation> aMapLocationLiveData;
-    private MutableLiveData<List<PoiItem>> poiItemList;
+    private MutableLiveData<List<PoiItem>> poiItemListLiveData;
+    private MutableLiveData<Tip> tipLiveData;
 
     public CoffeeViewModel(SavedStateHandle handle) {
         if (!handle.contains(KEY_LocationStyle) && !handle.contains(KEY_ClientOption)) {
@@ -34,7 +36,7 @@ public class CoffeeViewModel extends ViewModel {
             mLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//定位模式
             mLocationStyle.strokeWidth(0);//定位蓝点外圈边框大小
             mLocationStyle.strokeColor(Color.TRANSPARENT);//定位蓝点外圈边框颜色
-            mLocationStyle.radiusFillColor(Color.argb(50, 99, 214, 249));//定位蓝点外圈颜色
+            mLocationStyle.radiusFillColor(Color.TRANSPARENT);//定位蓝点外圈颜色
             mLocationStyle.showMyLocation(true);
 
             AMapLocationClientOption mLocationClientOption = new AMapLocationClientOption();
@@ -43,7 +45,7 @@ public class CoffeeViewModel extends ViewModel {
             mLocationClientOption.setWifiScan(true);//强制刷新Wifi
             mLocationClientOption.setMockEnable(false);//允许模拟位置
             mLocationClientOption.setOnceLocation(false);//单次定位
-            mLocationClientOption.setInterval(3000);//定位间隔
+            mLocationClientOption.setInterval(2000);//定位间隔
 
             handle.set(KEY_LocationStyle, mLocationStyle);
             handle.set(KEY_ClientOption, mLocationClientOption);
@@ -52,11 +54,11 @@ public class CoffeeViewModel extends ViewModel {
         this.handle = handle;
     }
 
-    public MutableLiveData<MyLocationStyle> getLocationStyle() {
+    public LiveData<MyLocationStyle> getLocationStyle() {
         return handle.getLiveData(KEY_LocationStyle);
     }
 
-    public MutableLiveData<AMapLocationClientOption> getClientOption() {
+    public LiveData<AMapLocationClientOption> getClientOption() {
         return handle.getLiveData(KEY_ClientOption);
     }
 
@@ -66,22 +68,20 @@ public class CoffeeViewModel extends ViewModel {
         }
 
         client.setLocationListener(aMapLocation -> aMapLocationLiveData.setValue(aMapLocation));
+
+        System.out.println("Data: Coffee-aMapLocationLiveData-Values: " + aMapLocationLiveData.getValue());
         return aMapLocationLiveData;
     }
 
-    public LiveData<List<PoiItem>> getPoiLiveData(Context context,
-                                                  int pageNum,
-                                                  String poiType,
-                                                  String cityCode,
-                                                  LatLonPoint latLonPoint) {
-        if (poiItemList == null) {
-            poiItemList = new MediatorLiveData<>();
-            poiItemList.setValue(null);
+    public LiveData<List<PoiItem>> getPoiLiveData(Context context, int pageNum, String poiType, String cityCode, LatLonPoint latLonPoint) {
+        if (poiItemListLiveData == null) {
+            poiItemListLiveData = new MediatorLiveData<>();
+            poiItemListLiveData.setValue(null);
         }
 
-        poiItemList.setValue(null);
+        poiItemListLiveData.setValue(null);
         PoiSearch.Query query = new PoiSearch.Query(poiType, "", cityCode);
-        query.setPageSize(15);
+        query.setPageSize(20);
         query.setPageNum(pageNum);
         PoiSearch poiSearch = new PoiSearch(context, query);
         poiSearch.setBound(new PoiSearch.SearchBound(latLonPoint, 1500));
@@ -89,7 +89,7 @@ public class CoffeeViewModel extends ViewModel {
         poiSearch.setOnPoiSearchListener(new PoiSearch.OnPoiSearchListener() {
             @Override
             public void onPoiSearched(PoiResult poiResult, int i) {
-                poiItemList.setValue(poiResult.getPois());
+                poiItemListLiveData.setValue(poiResult.getPois());
             }
 
             @Override
@@ -98,6 +98,22 @@ public class CoffeeViewModel extends ViewModel {
             }
         });
 
-        return poiItemList;
+        System.out.println("Data: Coffee-poiItemListLiveData-Values: " + poiItemListLiveData.getValue());
+        return poiItemListLiveData;
     }
+
+    public void setTipData(Tip tip) {
+        tipLiveData.setValue(tip);
+    }
+
+    public LiveData<Tip> getTipLiveData() {
+        if (tipLiveData == null) {
+            tipLiveData = new MutableLiveData<>();
+            tipLiveData.setValue(null);
+        }
+
+        System.out.println("Data: Coffee-tipLiveData-Values: " + tipLiveData.getValue());
+        return tipLiveData;
+    }
+
 }

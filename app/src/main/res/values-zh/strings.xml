@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aurora</string>
+    <string name="foods">附近美食</string>
+    <string name="drinks">来杯咖啡</string>
+    <string name="view">游山玩水</string>
+    <string name="hotel">晓行夜住</string>
+    <string name="shopping">货比三家</string>
+    <string name="sport">力拔千均</string>
+    <string name="health">当地医疗</string>
+    <string name="trafficService">络绎不绝</string>
+    <string name="tvRating">大众点评</string>
+    <string name="back">返回</string>
+    <string name="detailsInfoWebSite">网站</string>
+    <string name="detailsInfoEmail">邮件</string>
+    <string name="detailsInfoTel">电话</string>
+    <string name="labelSetting">设置</string>
+    <string name="labelDetails">详情</string>
+    <string name="bottomStatusTitle">查看周边…</string>
+    <string name="noSearch">这里什么都没有</string>
+    <string name="searchViewHint">搜索目的地…</string>
+</resources>

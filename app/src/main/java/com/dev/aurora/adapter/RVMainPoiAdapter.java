@@ -16,19 +16,19 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
 import com.bumptech.glide.Glide;
 import com.dev.aurora.R;
-import com.dev.aurora.databinding.RvItemNormalBinding;
+import com.dev.aurora.databinding.RvPoiItemNormalBinding;
 
 import java.util.List;
 import java.util.Objects;
 
-public class RVPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> {
+public class RVMainPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> {
     private static final int normalViewType = 0;
     private static final int footViewType = 1;
 
     private LatLng startLatLng;
     private onItemClickListener listener;
 
-    public RVPoiAdapter() {
+    public RVMainPoiAdapter() {
         super(new DiffUtil.ItemCallback<PoiItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull PoiItem oldItem, @NonNull PoiItem newItem) {
@@ -63,10 +63,10 @@ public class RVPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == footViewType) {
             return new RVPoiFoot(
-                    LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_foot, parent, false));
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_poi_item_foot, parent, false));
         } else {
             return new RVPoiVH(DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.getContext()), R.layout.rv_item_normal, parent, false));
+                    LayoutInflater.from(parent.getContext()), R.layout.rv_poi_item_normal, parent, false));
         }
     }
 
@@ -77,8 +77,8 @@ public class RVPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> 
         } else {
 
             PoiItem poiItem = getItem(position);
-            LatLng endLatlng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
-            int distance = (int) AMapUtils.calculateLineDistance(startLatLng, endLatlng);
+            LatLng endLatLng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
+            int distance = (int) AMapUtils.calculateLineDistance(startLatLng, endLatLng);
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(distance).append("M");
@@ -99,6 +99,8 @@ public class RVPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> 
                         .error(R.drawable.ic_error_red_72dp)
                         .timeout(3000)
                         .into(((RVPoiVH) holder).getBinding().ivPoi);
+            } else {
+                ((RVPoiVH) holder).getBinding().ivPoi.setImageResource(R.drawable.ic_nothing_gray_72dp);
             }
 
             ((RVPoiVH) holder).itemView.setOnClickListener(v -> {
@@ -124,14 +126,14 @@ public class RVPoiAdapter extends ListAdapter<PoiItem, RecyclerView.ViewHolder> 
     }
 
     static class RVPoiVH extends RecyclerView.ViewHolder {
-        RvItemNormalBinding binding;
+        RvPoiItemNormalBinding binding;
 
-        RVPoiVH(RvItemNormalBinding binding) {
+        RVPoiVH(RvPoiItemNormalBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        RvItemNormalBinding getBinding() {
+        RvPoiItemNormalBinding getBinding() {
             return binding;
         }
 

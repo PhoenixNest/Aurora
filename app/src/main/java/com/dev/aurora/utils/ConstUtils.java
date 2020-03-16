@@ -3,6 +3,7 @@ package com.dev.aurora.utils;
 public class ConstUtils {
     public static final String KEY_cityCode = "CityCode";
     public static final String KEY_poiItem = "KEY_poiItem";
+    public static final String KEY_tipLatLonPoint = "KEY_tipLatLonPoint";
 
     public static final String poiType_Food = "快餐厅";
     public static final String poiType_Drinks = "咖啡厅";

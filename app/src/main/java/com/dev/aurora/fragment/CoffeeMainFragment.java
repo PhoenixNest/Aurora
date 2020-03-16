@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,29 +19,28 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
 import com.dev.aurora.R;
-import com.dev.aurora.adapter.RVPoiAdapter;
+import com.dev.aurora.adapter.RVMainPoiAdapter;
 import com.dev.aurora.databinding.CoffeeMainFragmentBinding;
+import com.dev.aurora.utils.AnimationUtils;
 import com.dev.aurora.utils.ConstUtils;
 import com.dev.aurora.utils.MsgUtils;
 import com.dev.aurora.utils.SysUtils;
 import com.dev.aurora.viewmodel.CoffeeViewModel;
-
-import java.util.List;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class CoffeeMainFragment extends Fragment implements View.OnClickListener, LocationSource,
-        AMap.OnMapTouchListener, AMap.OnCameraChangeListener {
-
-    private CoordinatorLayout.LayoutParams layoutParams;
+        AMap.OnMapTouchListener {
 
     private boolean followTouch;
 
@@ -58,9 +56,10 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
 
     private String cityCode;
 
-    private RVPoiAdapter poiAdapter;
+    private RVMainPoiAdapter poiAdapter;
     private LatLng latLng;
-    private List<PoiItem> itemList;
+    private BottomSheetBehavior<ViewGroup> behavior;
+    private LatLng searchLatLng;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         followTouch = true;
         binding = DataBindingUtil.inflate(inflater, R.layout.coffee_main_fragment, container, false);
         binding.setLifecycleOwner(requireActivity());
-        binding.setCoffeeFragment(this);
         binding.mapView.onCreate(savedInstanceState);
 
         initTopView();
@@ -86,39 +84,47 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         clientOption = mViewModel.getClientOption().getValue();
     }
 
+    /**
+     * init Map
+     * received SearchData(if any)
+     */
     @Override
     public void onResume() {
         super.onResume();
         System.out.println("Coffee-onResume");
         SysUtils.closeKeyBoard(requireActivity().getApplicationContext(), getView());
         binding.mapView.onResume();
+
+        // Setup Map Data
         if (aMap == null) {
             aMap = binding.mapView.getMap();
             initMap();
         } else {
-            aMap.clear();
+            aMap.removecache();
             aMap = binding.mapView.getMap();
             initMap();
         }
+
+        getSearchData();
     }
 
+    // Map
     private void initMap() {
-        aMap.setTrafficEnabled(true);//路况
-        aMap.showMapText(true);//文字标示
-        aMap.showBuildings(true);//3D建筑
-        aMap.showIndoorMap(true);//室内地图
-        aMap.setMapType(AMap.MAP_TYPE_NORMAL);//模式
-        aMap.setOnCameraChangeListener(this);
-
         uiSettings = aMap.getUiSettings();
         uiSettings.setCompassEnabled(false);//指南针
         uiSettings.setIndoorSwitchEnabled(true);//室内地图
         uiSettings.setGestureScaleByMapCenter(true);//中心缩放
         uiSettings.setAllGesturesEnabled(true);//手势
         uiSettings.setZoomControlsEnabled(false);//缩放
-        uiSettings.setScaleControlsEnabled(false);//默认比例尺
+        uiSettings.setScaleControlsEnabled(true);//默认比例尺
         uiSettings.setMyLocationButtonEnabled(false);//定位按钮
         uiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_LEFT);//Logo
+
+        aMap.setTrafficEnabled(false);//路况
+        aMap.showMapText(true);//文字标示
+        aMap.showBuildings(true);//3D建筑
+        aMap.showIndoorMap(true);//室内地图
+        aMap.setMapType(AMap.MAP_TYPE_NORMAL);//模式
 
         aMap.setMyLocationStyle(locationStyle);
         aMap.setOnMapTouchListener(this);
@@ -126,34 +132,81 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         aMap.setMyLocationEnabled(true);
     }
 
+    // TopView
     private void initTopView() {
-        layoutParams = (CoordinatorLayout.LayoutParams) binding.coffeeNestedScrollView.getLayoutParams();
-        binding.coffeeNestedScrollView.setLayoutParams(this.layoutParams);
-        binding.coffeeAppBarLayout.addOnOffsetChangedListener((appBarLayout, i) -> {
-            binding.coffeeNestedScrollView.setLayoutParams(this.layoutParams);
-            if (Math.abs(i) > 0) {
-                float alpha = (float) Math.abs(i) / appBarLayout.getTotalScrollRange();
-                appBarLayout.setAlpha(alpha);
-                binding.coffeeNestedScrollView.getBackground().mutate().setAlpha(Math.round(alpha * 255));
-            } else {
-                appBarLayout.setAlpha(0);
-                binding.coffeeNestedScrollView.getBackground().mutate().setAlpha(0);
+        int statusBarHeight = SysUtils.getStatusHeight(requireActivity());
+        binding.includeTop.coffeeTop.setPadding(0, statusBarHeight, 45, 0);
+        binding.includeTop.coffeeTop.getLayoutParams().height = SysUtils.dp2px(56) + statusBarHeight;
+        binding.includeTop.coffeeTop.setBackgroundColor(requireActivity().getColor(R.color.colorPrimary));
+    }
+
+    // BottomView
+    private void initBottomView() {
+        binding.includeBottom.tvBSStatus.setBackgroundColor(requireActivity().getColor(R.color.colorPrimary));
+
+        behavior = BottomSheetBehavior.from(binding.includeBottom.consCoffeeBS);
+        behavior.setHideable(false);
+        behavior.setPeekHeight(SysUtils.dp2px(56), true);
+        int bottomMaxHeight = SysUtils.getWindowHeight(requireActivity()) - SysUtils.getStatusHeight(requireActivity());
+        behavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState != BottomSheetBehavior.STATE_EXPANDED) {
+                    ViewGroup.LayoutParams layoutParams = bottomSheet.getLayoutParams();
+                    if (bottomSheet.getHeight() > bottomMaxHeight) {
+                        layoutParams.height = bottomMaxHeight;
+                        bottomSheet.setLayoutParams(layoutParams);
+                    }
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
             }
         });
 
-    }
-
-    private void initBottomView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.includeBottom.rvBSCoffee.setLayoutManager(layoutManager);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL);
         binding.includeBottom.rvBSCoffee.addItemDecoration(itemDecoration);
 
-        poiAdapter = new RVPoiAdapter();
+        poiAdapter = new RVMainPoiAdapter();
         binding.includeBottom.rvBSCoffee.setAdapter(poiAdapter);
     }
 
+    // BottomView -> PoiData
+    private void getPoiList(String poiType) {
+        mViewModel.getPoiLiveData(requireActivity(), 0, poiType, cityCode, new LatLonPoint(latLng.latitude, latLng.longitude))
+                .observe(this, poiItems -> {
+                    poiAdapter.submitList(poiItems);
+                    poiAdapter.setListener(position -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(ConstUtils.KEY_poiItem, poiAdapter.getPoiItemList().get(position));
+                        Navigation.findNavController(binding.includeBottom.rvBSCoffee)
+                                .navigate(R.id.action_coffeeFragment_to_coffeeDetailsFragment, bundle);
+                    });
+                });
+    }
+
+    // SearchData
+    private void getSearchData() {
+        mViewModel.getTipLiveData().observe(requireActivity(), tip -> {
+            if (tip != null) {
+                followTouch = false;
+                searchLatLng = new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude());
+                aMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(searchLatLng, 16f, 45, 0)));
+                Marker marker = aMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromBitmap(SysUtils.vector2Bitmap(requireContext(), R.drawable.ic_marker_24dp)))
+                        .position(searchLatLng));
+                marker.setAnimation(AnimationUtils.getAMapMarkerAnimation());
+                marker.startAnimation();
+            }
+        });
+    }
+
+    // Listener
     private void initEvent() {
         binding.fbGPS.setOnClickListener(this);
         binding.fbSearch.setOnClickListener(this);
@@ -173,8 +226,8 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.fbGPS:
                 followTouch = true;
-                binding.mapView.getMap().animateCamera(CameraUpdateFactory
-                        .newCameraPosition(new CameraPosition(latLng, 18, 45, 0)));
+                if (aMap.getMapScreenMarkers().size() > 1) aMap.clear();
+                aMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 18f, 45, 0)));
                 break;
 
             case R.id.fbSearch:
@@ -218,20 +271,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    private void getPoiList(String poiType) {
-        mViewModel.getPoiLiveData(requireActivity(), 0, poiType, cityCode, new LatLonPoint(latLng.latitude, latLng.longitude))
-                .observe(getViewLifecycleOwner(), poiItems -> {
-                    itemList = poiItems;
-                    poiAdapter.submitList(itemList);
-                    poiAdapter.setListener(position -> {
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable(ConstUtils.KEY_poiItem, poiAdapter.getPoiItemList().get(position));
-                        Navigation.findNavController(binding.includeBottom.rvBSCoffee)
-                                .navigate(R.id.action_coffeeFragment_to_coffeeDetailsFragment, bundle);
-                    });
-                });
-    }
-
+    // open GPS
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         locationChangedListener = onLocationChangedListener;
@@ -244,9 +284,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
                     cityCode = aMapLocation.getCityCode();
 
                     latLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                    CameraPosition cameraPosition = new CameraPosition(latLng, 18f, 45, 0);
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                    binding.mapView.getMap().moveCamera(cameraUpdate);
+                    aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 18f, 45, 0)));
 
                     poiAdapter.setStartLatLng(latLng);
                 }
@@ -260,6 +298,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
 
     }
 
+    // close GPS
     @Override
     public void deactivate() {
         locationChangedListener = null;
@@ -269,18 +308,6 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         }
 
         locationClient = null;
-    }
-
-    @Override
-    public void onCameraChange(CameraPosition cameraPosition) {
-        uiSettings.setScaleControlsEnabled(true);
-        uiSettings.setCompassEnabled(true);
-    }
-
-    @Override
-    public void onCameraChangeFinish(CameraPosition cameraPosition) {
-        uiSettings.setScaleControlsEnabled(false);
-        uiSettings.setCompassEnabled(false);
     }
 
     @Override
@@ -300,6 +327,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         super.onPause();
         System.out.println("Coffee-OnPause");
         binding.mapView.onPause();
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         deactivate();
     }
 
@@ -308,6 +336,7 @@ public class CoffeeMainFragment extends Fragment implements View.OnClickListener
         super.onDestroyView();
         System.out.println("Coffee-onDestroyView");
         binding.mapView.onDestroy();
+        mViewModel.setTipData(null);
     }
 
     @Override

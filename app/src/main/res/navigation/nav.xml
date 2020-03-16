@@ -27,22 +27,21 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/coffeeFragment" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/coffeeFragment"
         android:name="com.dev.aurora.fragment.CoffeeMainFragment">
         <action
-            android:id="@+id/action_coffeeFragment_to_searchFragment"
-            app:destination="@id/searchFragment"
+            android:id="@+id/action_coffeeFragment_to_coffeeDetailsFragment"
+            app:destination="@id/coffeeDetailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_coffeeFragment_to_dailyNewsFragment"
-            app:destination="@id/dailyNewsFragment"
+            android:id="@+id/action_coffeeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -55,8 +54,8 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_coffeeFragment_to_coffeeDetailsFragment"
-            app:destination="@id/coffeeDetailsFragment"
+            android:id="@+id/action_coffeeFragment_to_dailyNewsFragment"
+            app:destination="@id/dailyNewsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -84,6 +83,7 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/coffeeFragment" />
     </fragment>
 </navigation>

@@ -6,23 +6,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.services.help.Tip;
 import com.dev.aurora.R;
-import com.dev.aurora.databinding.RvItemSearchBinding;
-
-import org.jetbrains.annotations.NotNull;
+import com.dev.aurora.databinding.RvSearchItemNormalBinding;
 
 import java.util.Objects;
 
-public class RVResultAdapter extends ListAdapter<Tip, RVResultAdapter.RVSearchVH> {
+public class RVSearchResultAdapter extends ListAdapter<Tip, RVSearchResultAdapter.RVSearchVH> {
 
-    public RVResultAdapter() {
+    private onItemClickListener listener;
+
+    public RVSearchResultAdapter() {
         super(new DiffUtil.ItemCallback<Tip>() {
             @Override
             public boolean areItemsTheSame(@NonNull Tip oldItem, @NonNull Tip newItem) {
@@ -36,33 +34,40 @@ public class RVResultAdapter extends ListAdapter<Tip, RVResultAdapter.RVSearchVH
         });
     }
 
+    public interface onItemClickListener {
+        void onClick(int position);
+    }
+
+    public void setListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public RVSearchVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RVSearchVH holder = new RVSearchVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_search, parent, false));
-        holder.itemView.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigateUp();
-        });
-
-        return holder;
+        return new RVSearchVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_search_item_normal, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RVSearchVH holder, int position) {
         Tip tip = getItem(position);
         holder.bindData(tip);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(position);
+            }
+        });
     }
 
     static class RVSearchVH extends RecyclerView.ViewHolder {
-        private RvItemSearchBinding binding;
+        private RvSearchItemNormalBinding binding;
 
         RVSearchVH(@NonNull View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
 
-        void bindData(@NotNull Tip tip) {
+        void bindData(@NonNull Tip tip) {
             binding.setData(tip);
         }
     }
