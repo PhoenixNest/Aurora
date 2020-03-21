@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,39 +11,43 @@
         android:id="@+id/coffeeTop"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        tools:context=".fragment.CoffeeMainFragment">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/ivWeather"
+            android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginStart="16dp"
             android:background="?selectableItemBackground"
+            android:contentDescription="@string/imageDes"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/ivLogo"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_menu_white_24dp" />
 
         <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
+            android:id="@+id/ivSetting"
+            android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginEnd="16dp"
             android:background="?selectableItemBackground"
+            android:contentDescription="@string/detailsInfoWebSite"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_settings_white_24dp" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivLogo"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/imageDes"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/ivWeather"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_logo_main_24dp" />
 

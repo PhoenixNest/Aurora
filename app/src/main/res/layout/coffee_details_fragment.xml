@@ -16,7 +16,7 @@
         tools:context=".fragment.CoffeeDetailsFragment">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_PoiDetails"
+            android:id="@+id/appBarPoiDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -40,6 +40,8 @@
                     android:layout_height="?actionBarSize"
                     android:background="@color/colorPrimary"
                     app:layout_collapseMode="pin"
+                    app:title="Details"
+                    app:titleTextColor="@android:color/white"
                     app:navigationIcon="@drawable/ic_back_white_24dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -145,13 +147,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:drawableTop="@drawable/ic_call_purple_36dp"
+                    android:drawableTop="@drawable/ic_call_dark_red_36dp"
                     android:drawablePadding="12dp"
                     android:gravity="center"
                     android:text="@string/detailsInfoTel"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/divider"
+                    app:layout_constraintBottom_toTopOf="@+id/dividerTemp"
                     app:layout_constraintEnd_toStartOf="@+id/tvPoiDetailsEmail"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -161,7 +163,7 @@
                     android:id="@+id/tvPoiDetailsEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_email_purple_36dp"
+                    android:drawableTop="@drawable/ic_email_dark_red_36dp"
                     android:drawablePadding="12dp"
                     android:gravity="center"
                     android:text="@string/detailsInfoEmail"
@@ -177,7 +179,7 @@
                     android:id="@+id/tvPoiDetailsWebStte"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_website_purple_36dp"
+                    android:drawableTop="@drawable/ic_website_dark_red_36dp"
                     android:drawablePadding="12dp"
                     android:gravity="center"
                     android:text="@string/detailsInfoWebSite"
@@ -190,7 +192,7 @@
                     app:layout_constraintTop_toTopOf="@+id/tvPoiDetailsEmail" />
 
                 <View
-                    android:id="@+id/divider"
+                    android:id="@+id/dividerTemp"
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="16dp"
@@ -219,7 +221,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/dividerTemp"
                     tools:text="TextView" />
 
                 <TextView
@@ -228,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
-                    android:drawableStart="@drawable/ic_open_time_purple_36dp"
+                    android:drawableStart="@drawable/ic_open_time_dark_red_36dp"
                     android:drawablePadding="12dp"
                     android:gravity="center_vertical"
                     android:marqueeRepeatLimit="marquee_forever"
@@ -253,9 +255,9 @@
             android:clickable="true"
             android:focusable="true"
             app:backgroundTint="@android:color/white"
-            app:layout_anchor="@id/app_bar_PoiDetails"
+            app:layout_anchor="@id/appBarPoiDetails"
             app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@drawable/ic_car_purple_24dp" />
+            app:srcCompat="@drawable/ic_car_dark_red_24dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

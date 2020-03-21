@@ -13,8 +13,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 public class SysUtils {
+
+    private static SysUtils sysUtils;
+
+    public synchronized static SysUtils getInstance() {
+        if (sysUtils == null) {
+            sysUtils = new SysUtils();
+        }
+
+        return sysUtils;
+    }
+
     // 收起键盘
-    public static void closeKeyBoard(Context context, View view) {
+    public void closeKeyBoard(Context context, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -22,7 +33,7 @@ public class SysUtils {
     }
 
     // 全局沉浸式
-    public static void enableImmersiveMode(Activity activity) {
+    public void enableImmersiveMode(Activity activity) {
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -31,7 +42,7 @@ public class SysUtils {
     }
 
     // 获取状态栏高度
-    public static int getStatusHeight(Context context) {
+    public int getStatusHeight(Context context) {
         int result = 0;
         int resId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resId > 0) {
@@ -41,16 +52,16 @@ public class SysUtils {
     }
 
     // 获取屏幕高度
-    public static int getWindowHeight(Context context) {
+    public int getWindowHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
     // dp转px
-    public static int dp2px(float dp) {
+    public int dp2px(float dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density + 0.5f);
     }
 
-    public static Bitmap vector2Bitmap(Context context, int vectorId) {
+    public Bitmap vector2Bitmap(Context context, int vectorId) {
         Drawable vectorDrawable = context.getDrawable(vectorId);
         Bitmap bitmap = null;
         if (vectorDrawable != null) {

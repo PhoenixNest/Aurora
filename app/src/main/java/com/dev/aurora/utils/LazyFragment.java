@@ -23,7 +23,6 @@ public abstract class LazyFragment extends Fragment {
 
     protected abstract int getContentViewId();
 
-
     protected abstract void initData();
 
     protected abstract void initEvent();

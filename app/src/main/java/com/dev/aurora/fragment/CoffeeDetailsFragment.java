@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -25,13 +25,14 @@ import com.dev.aurora.utils.SysUtils;
 
 public class CoffeeDetailsFragment extends Fragment implements View.OnClickListener {
 
-    private final int alphaMaxOffset = SysUtils.dp2px(150);
+    private final int alphaMaxOffset = SysUtils.getInstance().dp2px(150);
 
     private CoffeeDetailsFragmentBinding binding;
     private PoiItem poiItem;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(ConstUtils.coffeeDetailFragmentName, "---onCreateView---");
         binding = DataBindingUtil.inflate(inflater, R.layout.coffee_details_fragment, container, false);
         binding.setLifecycleOwner(this);
         setHasOptionsMenu(true);
@@ -41,8 +42,10 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
+        Log.d(ConstUtils.coffeeDetailFragmentName, "---onResume---");
+
         if (getArguments() != null) {
             poiItem = getArguments().getParcelable(ConstUtils.KEY_poiItem);
             binding.setData(poiItem);
@@ -53,9 +56,9 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
     }
 
     private void initUi() {
-        int statusBarHeight = SysUtils.getStatusHeight(requireActivity());
+        int statusBarHeight = SysUtils.getInstance().getStatusHeight(requireActivity());
         binding.toolbarPoiDetails.setPadding(0, statusBarHeight, 0, 0);
-        binding.toolbarPoiDetails.getLayoutParams().height = SysUtils.dp2px(56) + statusBarHeight;
+        binding.toolbarPoiDetails.getLayoutParams().height = SysUtils.getInstance().dp2px(56) + statusBarHeight;
         binding.toolbarPoiDetails.getBackground().setAlpha(0);
         binding.appBarPoiDetails.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
             if (verticalOffset > -alphaMaxOffset) {
@@ -98,10 +101,10 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.fbPoiDetailsGo:
-                Navigation.findNavController(v).navigateUp();
+                Navigation.findNavController(view).navigateUp();
                 break;
 
             case R.id.tvPoiDetailsTel:
@@ -126,5 +129,19 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
 
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(ConstUtils.coffeeDetailFragmentName, "---onDestroyView---");
+
+        ((ViewGroup) binding.getRoot()).removeAllViews();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(ConstUtils.coffeeDetailFragmentName, "---onDestroy---");
     }
 }

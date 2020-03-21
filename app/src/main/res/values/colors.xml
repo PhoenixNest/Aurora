@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#53073B</color>
     <color name="colorAccent">#F27121</color>
 
+    <color name="liteWhite">#80FFFFFF</color>
+
     <color name="foodColor">#FFA000</color>
     <color name="drinkColor">#1976d2</color>
     <color name="viewColor">#00bfa5</color>

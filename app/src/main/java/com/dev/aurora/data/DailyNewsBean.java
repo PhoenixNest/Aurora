@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-public class DailyNewsBeans implements Parcelable {
+public class DailyNewsBean implements Parcelable {
     private int postId;
     private List<NewsItem> newsItemList;
 
-    protected DailyNewsBeans(Parcel in) {
+    protected DailyNewsBean(Parcel in) {
         postId = in.readInt();
     }
 
@@ -23,15 +23,15 @@ public class DailyNewsBeans implements Parcelable {
         return 0;
     }
 
-    public static final Creator<DailyNewsBeans> CREATOR = new Creator<DailyNewsBeans>() {
+    public static final Creator<DailyNewsBean> CREATOR = new Creator<DailyNewsBean>() {
         @Override
-        public DailyNewsBeans createFromParcel(Parcel in) {
-            return new DailyNewsBeans(in);
+        public DailyNewsBean createFromParcel(Parcel in) {
+            return new DailyNewsBean(in);
         }
 
         @Override
-        public DailyNewsBeans[] newArray(int size) {
-            return new DailyNewsBeans[size];
+        public DailyNewsBean[] newArray(int size) {
+            return new DailyNewsBean[size];
         }
     };
 

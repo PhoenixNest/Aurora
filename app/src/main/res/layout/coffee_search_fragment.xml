@@ -7,66 +7,75 @@
 
     </data>
 
-    <LinearLayout
-        android:id="@+id/llSearch"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coorSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".fragment.CoffeeSearchFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/consSearch"
+        <LinearLayout
+            android:id="@+id/llSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <SearchView
-                android:id="@+id/svSearch"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/consSearch"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/searchview"
-                android:closeIcon="@drawable/ic_close_gray_24dp"
-                android:iconifiedByDefault="false"
-                android:inputType="text"
-                android:queryBackground="@null"
-                android:queryHint="@string/searchViewHint"
-                android:searchIcon="@drawable/ic_search_gray_24dp"
-                android:showDividers="none"
-                android:submitBackground="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnBack"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:background="@color/colorPrimary">
 
-            </SearchView>
+                <SearchView
+                    android:id="@+id/svSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/sv_bg"
+                    android:closeIcon="@drawable/ic_lite_white_24dp"
+                    android:iconifiedByDefault="false"
+                    android:inputType="text"
+                    android:queryBackground="@null"
+                    android:queryHint="@string/searchViewHint"
+                    android:searchIcon="@drawable/ic_search_lite_white_24dp"
+                    android:showDividers="none"
+                    android:submitBackground="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnBack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/btnBack"
-                android:layout_width="72dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/back"
-                android:textColor="@color/text_press_color"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/svSearch"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/svSearch"
-                app:layout_constraintTop_toTopOf="@+id/svSearch" />
+                </SearchView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/btnBack"
+                    android:layout_width="72dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="@string/back"
+                    android:textColor="@color/text_press_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/svSearch"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/svSearch"
+                    app:layout_constraintTop_toTopOf="@+id/svSearch" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 </layout>

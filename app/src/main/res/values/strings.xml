@@ -1,5 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Aurora</string>
+    <string name="app_info1">Welcome to use aurora for the first time.</string>
+    <string name="app_info2">\tBefore using this application, you may need to configure the necessary permissions required by this application.
+        Aurora will promise not to disclose personal privacy.</string>
+    <string name="app_info3">Maps data by Alibaba AMap open platform\n
+        Weather data by Hefeng weather open API</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="searchViewHint">Enter your destination…</string>
@@ -20,4 +25,32 @@
     <string name="labelDetails">Details</string>
     <string name="bottomStatusTitle">Find Something Interested</string>
     <string name="noSearch">There is nothing here…</string>
+    <string name="permissionDialog_Negative" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="permissionDialog_Positive">SETTING</string>
+    <string name="permissionDenied_Msg">PERMISSION DENIED! please go to the SYSTEM SETTING to set it manually</string>
+    <string name="permissionBtn">authorization</string>
+    <string name="permissionDialog_Msg">PERMISSION DENIED! please go to the SYSTEM SETTING to set it manually</string>
+    <string name="permissionCheck">Some permissions are invalid. Please check the permission settings</string>
+    <string name="mapErrorMsg">Unable to get current location</string>
+    <string name="searchTipError">Unable to get the latitude and longitude of this place, please search again</string>
+    <string name="coffeeBSNothing">Would you like a cup of coffee ?</string>
+    <string name="settingCompass">Open Map Compass</string>
+    <string name="settingTraffic">Real time traffic condition</string>
+    <string name="settingMapModeNormal">Normal</string>
+    <string name="settingMapModeNight">Night</string>
+    <string name="settingMapModeNav">Navi</string>
+    <string name="settingMapModeSatellite">Satellite</string>
+    <string name="settingMapUiLabel">Map Ui Setting</string>
+    <string name="settingMapModeLabel">Map Mode Setting</string>
+    <string name="navWeatherLabel">Weather</string>
+    <string name="navDailyNewsLabel">Daily News</string>
+    <string name="navWeatherTemp">Temp / ℃</string>
+    <string name="navWeatherFeel">Somatosensory</string>
+    <string name="navWeatherWD">Wind direction</string>
+    <string name="navWeatherWP">Wind power</string>
+    <string name="navWeatherWS">Wind speed</string>
+    <string name="navWeatherHum">Humidity</string>
+    <string name="navWeatherVis">Visibility</string>
+    <string name="navWeatherLastUpdateTime">"Last Update Time: "</string>
+    <string name="imageDes">imageDes</string>
 </resources>

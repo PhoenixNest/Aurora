@@ -21,18 +21,20 @@ public class RVSearchResultAdapter extends ListAdapter<Tip, RVSearchResultAdapte
     private onItemClickListener listener;
 
     public RVSearchResultAdapter() {
-        super(new DiffUtil.ItemCallback<Tip>() {
-            @Override
-            public boolean areItemsTheSame(@NonNull Tip oldItem, @NonNull Tip newItem) {
-                return oldItem.getPoiID().equals(newItem.getPoiID());
-            }
-
-            @Override
-            public boolean areContentsTheSame(@NonNull Tip oldItem, @NonNull Tip newItem) {
-                return Objects.equals(oldItem, newItem);
-            }
-        });
+        super(diffCallBack);
     }
+
+    private static DiffUtil.ItemCallback<Tip> diffCallBack = new DiffUtil.ItemCallback<Tip>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Tip oldItem, @NonNull Tip newItem) {
+            return oldItem.getPoiID().equals(newItem.getPoiID());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Tip oldItem, @NonNull Tip newItem) {
+            return Objects.equals(oldItem, newItem);
+        }
+    };
 
     public interface onItemClickListener {
         void onClick(int position);
