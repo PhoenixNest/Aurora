@@ -19,6 +19,6 @@ public interface SearchDao {
     @Query("Delete From searchitem")
     void deleteAllSearchHistory();
 
-    @Query("Select Distinct * From searchitem Group By searchName Order By id DESC")
+    @Query("Select Distinct * From searchitem Order By id DESC")
     LiveData<List<SearchItem>> getAllSearchItem();
 }

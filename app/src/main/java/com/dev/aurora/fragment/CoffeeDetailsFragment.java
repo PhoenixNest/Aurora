@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.amap.api.services.core.PoiItem;
@@ -21,23 +22,27 @@ import com.bumptech.glide.Glide;
 import com.dev.aurora.R;
 import com.dev.aurora.databinding.CoffeeDetailsFragmentBinding;
 import com.dev.aurora.utils.ConstUtils;
+import com.dev.aurora.utils.MsgUtils;
 import com.dev.aurora.utils.SysUtils;
+import com.dev.aurora.viewmodel.CoffeeViewModel;
 
 public class CoffeeDetailsFragment extends Fragment implements View.OnClickListener {
 
     private final int alphaMaxOffset = SysUtils.getInstance().dp2px(150);
 
     private CoffeeDetailsFragmentBinding binding;
+    private CoffeeViewModel mViewModel;
     private PoiItem poiItem;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(ConstUtils.coffeeDetailFragmentName, "---onCreateView---");
+
+        mViewModel = new ViewModelProvider(requireActivity()).get(CoffeeViewModel.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.coffee_details_fragment, container, false);
         binding.setLifecycleOwner(this);
-        setHasOptionsMenu(true);
-        initUi();
 
+        initUi();
         return binding.getRoot();
     }
 
@@ -104,14 +109,18 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fbPoiDetailsGo:
+                mViewModel.setPoiItemData(poiItem);
                 Navigation.findNavController(view).navigateUp();
                 break;
 
             case R.id.tvPoiDetailsTel:
                 Intent intentCall = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + poiItem.getTel());
-                intentCall.setData(data);
-
+                if (!TextUtils.isEmpty(poiItem.getTel())) {
+                    Uri data = Uri.parse("tel:" + poiItem.getTel());
+                    intentCall.setData(data);
+                } else {
+                    MsgUtils.getInstance().showToast(requireContext(), "商家未设置电话号码");
+                }
                 new AlertDialog.Builder(requireContext())
                         .setTitle("将拨打 : " + poiItem.getTel())
                         .setNegativeButton("取消", (dialog, which) -> {
@@ -123,10 +132,8 @@ public class CoffeeDetailsFragment extends Fragment implements View.OnClickListe
 
             case R.id.tvPoiDetailsEmail:
 
-                break;
-
             case R.id.tvPoiDetailsWebStte:
-
+                MsgUtils.getInstance().showToast(requireContext(), "Developing...");
                 break;
         }
     }

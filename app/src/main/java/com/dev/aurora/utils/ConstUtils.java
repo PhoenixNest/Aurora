@@ -6,17 +6,10 @@ import com.amap.api.maps.AMap;
 
 public class ConstUtils {
     // HeWeather
-    public static final String HeWeatherDevID = "your id";
-    public static final String HeWeatherKey = "your key";
+    public static final String HeWeatherDevID = "Your ID";
+    public static final String HeWeatherKey = "Your KEY";
 
-    // Pixabay
-    public static final String baseURL = "https://pixabay.com/api/";
-    public static final String pixabayKey = "your key";
-    public static final String pixabayImageType = "photo";
-    public static final String pixabayImageOrientation = "vertical";
-    public static final String pixabayEditorsChoice = "true";
-    public static final String pixabayOrderBy = "latest";
-
+    public static final String PixabayKey = "Your KEY";
 
     public static final String app_sp_name = "AuroraSP";
     public static final String permission_name = "hasPermission";
@@ -25,21 +18,22 @@ public class ConstUtils {
     public static final String spKEY_isOpenTraffic = "isOpenTraffic";
     public static final String spKEY_currentMapMode = "currentMapMode";
 
-    public static final String splashActivityName = "SplashActivity: ";
-    public static final String mainActivityName = "MainActivity: ";
-    public static final String coffeeMainFragmentName = "CoffeeMainFragment: ";
-    public static final String coffeeSearchFragmentName = "CoffeeSearchFragment: ";
-    public static final String coffeeDetailFragmentName = "CoffeeDetailFragment: ";
-    public static final String coffeeSettingFragmentName = "CoffeeSettingFragment: ";
+    public static final String splashActivityName = "SplashActivity";
+    public static final String mainActivityName = "MainActivity";
+    public static final String coffeeMainFragmentName = "CoffeeMainFragment";
+    public static final String coffeeSearchFragmentName = "CoffeeSearchFragment";
+    public static final String coffeeDetailFragmentName = "CoffeeDetailFragment";
+    public static final String coffeeSettingFragmentName = "CoffeeSettingFragment";
 
     public static final String dailyNewsFragmentName = "DailyNewsFragment: ";
-    public static final String weatherFragmentName = "WeatherFragment: ";
 
-    public static final String KEY_cityName = "CityName";
-    public static final String KEY_cityCode = "CityCode";
-    public static final String KEY_tipItem = "KEY_tipItem";
+    public static final String KEY_cityCode = "KEY_cityCode";
     public static final String KEY_poiItem = "KEY_poiItem";
-    public static final String KEY_tipLatLonPoint = "KEY_tipLatLonPoint";
+    public static final String KEY_imageURL = "KEY_imageURL";
+
+    public static final int navMode_BUS = 0;
+    public static final int navMode_CAR = 1;
+    public static final int navMode_WALK = 2;
 
     public static final String poiType_Food = "050300";// 快餐厅
     public static final String poiType_Drinks = "050500";// 咖啡厅

@@ -19,5 +19,4 @@ public class MainActivity extends AppCompatActivity {
         HeConfig.init(ConstUtils.HeWeatherDevID, ConstUtils.HeWeatherKey);
         HeConfig.switchToFreeServerNode();
     }
-
 }

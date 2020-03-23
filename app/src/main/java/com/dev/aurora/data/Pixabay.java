@@ -14,3 +14,31 @@ public interface Pixabay {
             @Field("editors_choice") String editors_choice,
             @Field("order") String order);
 }
+
+// Test Code
+    /*public LiveData<PixabayBean> _getPixabayDataByRetrofit() {
+        if (pixabayLiveData == null) {
+            pixabayLiveData = new MutableLiveData<>();
+            pixabayLiveData.setValue(null);
+        }
+
+        Pixabay call = RetrofitUtils.getInstance(ConstUtils.baseURL).create(Pixabay.class);
+        call.getPixabayData(ConstUtils.pixabayKey,
+                ConstUtils.pixabayImageType,
+                ConstUtils.pixabayImageOrientation,
+                ConstUtils.pixabayEditorsChoice,
+                ConstUtils.pixabayOrderBy).enqueue(new Callback<PixabayBean>() {
+            @Override
+            public void onResponse(Call<PixabayBean> call, Response<PixabayBean> response) {
+                Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片成功" + response.body().toString());
+                pixabayLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PixabayBean> call, Throwable throwable) {
+                Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片失败：" + throwable);
+            }
+        });
+
+        return pixabayLiveData;
+    }*/

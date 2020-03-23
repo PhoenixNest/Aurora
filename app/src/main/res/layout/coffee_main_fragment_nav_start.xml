@@ -62,19 +62,35 @@
 
                     <TextView
                         android:id="@+id/tvNavAuthor"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#60FFFFFF"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/liteWhite"
+                        android:ellipsize="marquee"
                         android:gravity="start|center_vertical"
-                        android:padding="16dp"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:text="@{imageData.user}"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView"
+                        app:layout_constraintTop_toTopOf="@+id/textView"
+                        app:layout_constraintVertical_bias="0.0"
+                        tool:text="PhoenixNest" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/liteWhite"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Produced By: "
+                        android:textColor="@android:color/white"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tool:text="PhoenixNest" />
+                        app:layout_constraintEnd_toStartOf="@id/tvNavAuthor"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,17 +112,6 @@
                 app:weatherData="@{weatherData}" />
 
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_stars_white_24dp"
-            app:layout_anchor="@id/appBarNav"
-            app:layout_anchorGravity="end|bottom" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

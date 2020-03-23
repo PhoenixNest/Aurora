@@ -34,7 +34,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/sv_bg"
-                    android:closeIcon="@drawable/ic_lite_white_24dp"
+                    android:closeIcon="@drawable/ic_close_lite_white_24dp"
                     android:iconifiedByDefault="false"
                     android:inputType="text"
                     android:queryBackground="@null"

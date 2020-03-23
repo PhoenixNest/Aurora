@@ -104,7 +104,7 @@ public class RVMainPoiAdapter extends PagedListAdapter<PoiItem, RecyclerView.Vie
     static class RVPoiVH extends RecyclerView.ViewHolder {
         RvPoiItemNormalBinding binding;
 
-        RVPoiVH(RvPoiItemNormalBinding binding) {
+        RVPoiVH(@NonNull RvPoiItemNormalBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -18,18 +18,6 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/weatherFragment"
-        android:name="com.dev.aurora.fragment.WeatherFragment"
-        tools:layout="@layout/weather_fragment">
-        <action
-            android:id="@+id/action_weatherFragment_to_coffeeFragment"
-            app:destination="@id/coffeeMainFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-    <fragment
         android:id="@+id/coffeeMainFragment"
         android:name="com.dev.aurora.fragment.CoffeeMainFragment">
         <action
@@ -47,13 +35,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_coffeeFragment_to_weatherFragment"
-            app:destination="@id/weatherFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_coffeeFragment_to_dailyNewsFragment"
             app:destination="@id/dailyNewsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -63,6 +44,13 @@
         <action
             android:id="@+id/action_coffeeFragment_to_coffeeSettingFragment"
             app:destination="@id/coffeeSettingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_coffeeMainFragment_to_coffeeNavHeaderFragment"
+            app:destination="@id/coffeeNavHeaderFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -100,6 +88,19 @@
         tools:layout="@layout/coffee_setting_fragment" >
         <action
             android:id="@+id/action_coffeeSettingFragment_to_coffeeFragment"
+            app:destination="@id/coffeeMainFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/coffeeNavHeaderFragment"
+        android:name="com.dev.aurora.fragment.CoffeeNavHeaderFragment"
+        android:label="coffee_main_fragment_nav_header"
+        tools:layout="@layout/coffee_nav_header_fragment" >
+        <action
+            android:id="@+id/action_coffeeNavHeaderFragment_to_coffeeMainFragment"
             app:destination="@id/coffeeMainFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

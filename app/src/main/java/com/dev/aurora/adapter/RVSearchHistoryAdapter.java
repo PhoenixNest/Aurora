@@ -61,6 +61,7 @@ public class RVSearchHistoryAdapter extends ListAdapter<SearchItem, RecyclerView
         if (holder instanceof RVSearchHistoryNormalVH) {
             SearchItem item = getItem(position);
             ((RVSearchHistoryNormalVH) holder).bindData(item);
+            ((RVSearchHistoryNormalVH) holder).getBinding().tvSearchTime.setSelected(true);
             ((RVSearchHistoryNormalVH) holder).itemView.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onClick(position);
@@ -88,6 +89,10 @@ public class RVSearchHistoryAdapter extends ListAdapter<SearchItem, RecyclerView
         RVSearchHistoryNormalVH(RvSearchItemHistoryNormalBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+        }
+
+        RvSearchItemHistoryNormalBinding getBinding() {
+            return binding;
         }
 
         void bindData(SearchItem searchItem) {

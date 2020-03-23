@@ -10,6 +10,14 @@
             type="com.dev.aurora.data.PixabayBean.HitsBean" />
 
         <variable
+            name="tipData"
+            type="com.amap.api.services.help.Tip" />
+
+        <variable
+            name="tipRouteData"
+            type="com.amap.api.services.help.Tip" />
+
+        <variable
             name="city"
             type="String" />
 
@@ -40,6 +48,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="?actionBarSize" />
 
+            <com.amap.api.navi.AMapNaviView
+                android:id="@+id/navView"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="?actionBarSize" />
+
             <include
                 android:id="@+id/includeTop"
                 layout="@layout/coffee_main_fragment_top" />
@@ -48,17 +63,28 @@
                 android:id="@+id/includeBottom"
                 layout="@layout/coffee_main_fragment_bottom" />
 
+            <include
+                android:id="@+id/includeBottomNav"
+                layout="@layout/coffee_main_fragment_bottom_nav"
+                app:tipData="@{tipData}" />
+
+            <include
+                android:id="@+id/includeBottomNavRoute"
+                layout="@layout/coffee_main_fragment_bottom_nav_route"
+                app:tipRouteData="@{tipRouteData}" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMapScaleController"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="72dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <ImageView
@@ -102,7 +128,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_search_dark_red_24dp"
-                app:borderWidth="0dp" />
+                app:borderWidth="0dp"
+                app:fabSize="auto" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fbGPS"
@@ -112,15 +139,16 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="154dp"
                 android:clickable="true"
-                android:focusable="true"
                 android:src="@drawable/ic_my_location_white_24dp"
-                app:borderWidth="0dp" />
+                app:borderWidth="0dp"
+                app:fabSize="auto" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <include
             android:id="@+id/includeNavCoffee"
             layout="@layout/coffee_main_fragment_nav_start"
+            android:visibility="visible"
             app:city="@{city}"
             app:imageData="@{headerData}"
             app:updateData="@{updateData}"

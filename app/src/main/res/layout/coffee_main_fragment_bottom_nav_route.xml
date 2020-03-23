@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="tipRouteData"
+            type="com.amap.api.services.help.Tip" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coorCoffeeBSNavRoute"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="12dp"
+        app:behavior_peekHeight="196dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        tools:context=".fragment.CoffeeMainFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consCoffeeBSNavRoute"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/consBSNavRouteStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/libraryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvBSNavRouteEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="@{tipRouteData.address}"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintEnd_toStartOf="@+id/btnBSNavRouteClose"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    tools:text="揭阳真理中学分教处" />
+
+                <TextView
+                    android:id="@+id/tvBSNavRouteStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="我的位置"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/liteWhite"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="@+id/tvBSNavRouteEnd"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tvBSNavRouteEnd"
+                    app:layout_constraintTop_toTopOf="@+id/textView2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/btnBSNavRouteClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:padding="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvBSNavRouteEnd"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.468"
+                    app:srcCompat="@drawable/ic_close_lite_white_24dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="终点："
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/tvBSNavRouteEnd"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="起点："
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/liteWhite"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBSNavRoute"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <Button
+                android:id="@+id/btnBSNavRouteWalk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/trafficColor"
+                android:drawableStart="@drawable/ic_go_gray_24dp"
+                android:drawablePadding="8dp"
+                android:text="步行"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/rvBSNavRoute"
+                app:layout_constraintEnd_toStartOf="@+id/btnBSNavRouteCar"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/consBSNavRouteStatus" />
+
+            <Button
+                android:id="@+id/btnBSNavRouteCar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/trafficColor"
+                android:drawableStart="@drawable/ic_car_white_24dp"
+                android:drawablePadding="8dp"
+                android:text="开车"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBSNavRouteWalk"
+                app:layout_constraintEnd_toStartOf="@+id/btnBSNavRouteBus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnBSNavRouteWalk"
+                app:layout_constraintTop_toTopOf="@+id/btnBSNavRouteWalk" />
+
+            <Button
+                android:id="@+id/btnBSNavRouteBus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/trafficColor"
+                android:drawableStart="@drawable/ic_bus_white_24dp"
+                android:drawablePadding="8dp"
+                android:text="大众交通"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBSNavRouteCar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnBSNavRouteCar"
+                app:layout_constraintTop_toTopOf="@+id/btnBSNavRouteCar" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/rvBSNavRoute"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBSNavRouteWalk" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

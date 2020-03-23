@@ -18,10 +18,17 @@ import androidx.paging.PagedList;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.help.Tip;
+import com.amap.api.services.route.BusPath;
+import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.RideRouteResult;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkRouteResult;
 import com.android.volley.toolbox.StringRequest;
 import com.dev.aurora.data.PixabayBean;
 import com.dev.aurora.data.PoiItemDataSourceFactory;
@@ -30,6 +37,7 @@ import com.dev.aurora.repository.CoffeeRepository;
 import com.dev.aurora.utils.ConstUtils;
 import com.dev.aurora.utils.VolleyUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 import java.util.Random;
@@ -49,9 +57,11 @@ public class CoffeeViewModel extends AndroidViewModel {
     private SavedStateHandle handle;
     private MutableLiveData<AMapLocation> aMapLocationLiveData;
     private MutableLiveData<Tip> tipLiveData;
+    private MutableLiveData<PoiItem> poiItemLiveData;
     private MutableLiveData<Update> updateLiveData;
     private MutableLiveData<NowBase> nowWeatherLiveData;
     private MutableLiveData<PixabayBean.HitsBean> pixabayLiveData;
+    private MutableLiveData<List<BusPath>> busPathLiveData;
 
     private CoffeeRepository coffeeRepository;
     private DataSource<Integer, PoiItem> dataSource;
@@ -164,18 +174,28 @@ public class CoffeeViewModel extends AndroidViewModel {
         return nowWeatherLiveData;
     }
 
+    // Nav Header Image Data
     public LiveData<PixabayBean.HitsBean> getPixabayDataByVolley(Context context) {
         if (pixabayLiveData == null) {
             pixabayLiveData = new MutableLiveData<>();
             pixabayLiveData.setValue(null);
         }
-        String requestUrl = "https://pixabay.com/api/?key=15455499-22cfacf3fc2820d332ff649aa&image_type=photo&orientation=vertical&editors_choice=true&order=latest";
+        String requestUrl = "https://pixabay.com/api/?" +
+                "key=" + ConstUtils.PixabayKey + "&" +
+                "image_type=photo&" +
+                "orientation=vertical&" +
+                "order=popular&" +
+                "safesearch=true";
         StringRequest request = new StringRequest(requestUrl, response -> {
-            int random = new Random().nextInt(19);
-            PixabayBean.HitsBean hitsBean = new Gson().fromJson(requestUrl, PixabayBean.class).getHits().get(random);
+            Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片成功" + response);
 
-            pixabayLiveData.setValue(hitsBean);
-            Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片成功" + hitsBean.getPageURL());
+            PixabayBean pixabayBean = new Gson().fromJson(response, new TypeToken<PixabayBean>() {
+            }.getType());
+
+            if (pixabayBean != null) {
+                PixabayBean.HitsBean hitsBean = pixabayBean.getHits().get(new Random().nextInt(19));
+                if (hitsBean != null) pixabayLiveData.setValue(hitsBean);
+            }
 
         }, error -> Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片失败：" + error.toString()));
 
@@ -183,33 +203,6 @@ public class CoffeeViewModel extends AndroidViewModel {
 
         return pixabayLiveData;
     }
-
-    /*public LiveData<PixabayBean> _getPixabayDataByRetrofit() {
-        if (pixabayLiveData == null) {
-            pixabayLiveData = new MutableLiveData<>();
-            pixabayLiveData.setValue(null);
-        }
-
-        Pixabay call = RetrofitUtils.getInstance(ConstUtils.baseURL).create(Pixabay.class);
-        call.getPixabayData(ConstUtils.pixabayKey,
-                ConstUtils.pixabayImageType,
-                ConstUtils.pixabayImageOrientation,
-                ConstUtils.pixabayEditorsChoice,
-                ConstUtils.pixabayOrderBy).enqueue(new Callback<PixabayBean>() {
-            @Override
-            public void onResponse(Call<PixabayBean> call, Response<PixabayBean> response) {
-                Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片成功" + response.body().toString());
-                pixabayLiveData.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<PixabayBean> call, Throwable throwable) {
-                Log.d(ConstUtils.coffeeMainFragmentName, "获取封面图片失败：" + throwable);
-            }
-        });
-
-        return pixabayLiveData;
-    }*/
 
     // 获取MainFragment中的Poi列表
     public LiveData<PagedList<PoiItem>> getPoiData(Context context, String poiType, String cityCode, LatLonPoint latLonPoint) {
@@ -243,6 +236,81 @@ public class CoffeeViewModel extends AndroidViewModel {
 
         Log.d(ConstUtils.coffeeMainFragmentName, "获得的Tip建议数据为：" + tipLiveData.getValue());
         return tipLiveData;
+    }
+
+    // 设置DetailsFragment中的PoiItem(单次保存，HostFragment的View被回收时置空)
+    public void setPoiItemData(PoiItem poiItemData) {
+        poiItemLiveData.setValue(poiItemData);
+    }
+
+    // 返回DetailsFragment中的Poi数据
+    public LiveData<PoiItem> getPoiItemLiveData() {
+        if (poiItemLiveData == null) {
+            poiItemLiveData = new MediatorLiveData<>();
+            poiItemLiveData.setValue(null);
+        }
+
+        return poiItemLiveData;
+    }
+
+    // Bottom Nav Data
+    public void getNavBusData(Context context, String cityCode, LatLng start, LatLng end, int chooseMode) {
+        if (busPathLiveData == null) busPathLiveData = new MutableLiveData<>();
+
+        RouteSearch routeSearch = new RouteSearch(context);
+        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
+                new LatLonPoint(start.latitude, start.longitude),// 起点
+                new LatLonPoint(end.latitude, end.longitude));// 终点
+
+        RouteSearch.BusRouteQuery busRouteQuery = new RouteSearch.BusRouteQuery(
+                fromAndTo,// 起终点
+                RouteSearch.BUS_LEASE_WALK,// 公交查询模式(当前为最快捷)
+                cityCode,// 公交查询的城市号(当前城市)
+                0);// 是否计算夜班车(0:不计算 / 1:计算)，如果计算则夜班车搜索结果在顶部
+
+        routeSearch.calculateBusRouteAsyn(busRouteQuery);
+
+        routeSearch.setRouteSearchListener(new RouteSearch.OnRouteSearchListener() {
+            @Override
+            public void onBusRouteSearched(BusRouteResult busRouteResult, int rCode) {
+                if (rCode == 1000) {
+                    if (busRouteResult != null) {
+                        Log.d(ConstUtils.coffeeMainFragmentName, "返回---公交路线规划---成功，返回结果：" + busRouteResult);
+                        busPathLiveData.setValue(busRouteResult.getPaths());
+                    } else {
+                        Log.d(ConstUtils.coffeeMainFragmentName, "返回---公交路线规划---失败，暂时无法前往该处，返回结果为空");
+                    }
+                } else {
+                    Log.d(ConstUtils.coffeeMainFragmentName, "返回公交路线规划失败，错误码为：" + rCode);
+                }
+            }
+
+            @Override
+            public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int rCode) {
+
+            }
+
+            @Override
+            public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int rCode) {
+
+            }
+
+            @Override
+            public void onRideRouteSearched(RideRouteResult rideRouteResult, int rCode) {
+
+            }
+        });
+
+    }
+
+    // 返回Nav中的公交路线
+    public LiveData<List<BusPath>> getBusLiveData() {
+        return busPathLiveData;
+    }
+
+    // 清空已获取的(公交)路线规划，单次获取(HostFragment的View被清空时置空)
+    public void clearBusPathLiveData() {
+        if (busPathLiveData != null) busPathLiveData.setValue(null);
     }
 
     // 返回SearchFragment中历史搜素记录

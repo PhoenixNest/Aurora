@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools">
+    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -22,7 +23,8 @@
         android:id="@+id/consNavContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/nav_bg">
+        android:background="@color/colorPrimaryDark"
+        tools:context=".fragment.CoffeeMainFragment">
 
         <TextView
             android:id="@+id/tvWeatherCityName"
@@ -80,7 +82,7 @@
             android:id="@+id/cvTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/sportColor"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toTopOf="@+id/cvWind"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
