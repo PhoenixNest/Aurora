@@ -45,7 +45,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Paging
-    implementation 'androidx.paging:paging-runtime:2.1.1'
+    implementation 'androidx.paging:paging-runtime:2.1.2'
 
     // Navigation
     implementation 'androidx.navigation:navigation-fragment:2.2.1'
@@ -53,8 +53,8 @@ dependencies {
     apply plugin: "androidx.navigation.safeargs"
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.4'
-    annotationProcessor "androidx.room:room-compiler:2.2.4"
+    implementation 'androidx.room:room-runtime:2.2.5'
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
 
     // WorkManager
     implementation "androidx.work:work-runtime:2.3.4"
@@ -71,7 +71,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
 
     // okHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
 
     // Volley
     implementation 'com.android.volley:dc-volley:1.1.0'
@@ -94,7 +94,7 @@ dependencies {
     // AMap
     implementation 'com.amap.api:location:4.8.0'
     implementation 'com.amap.api:search:7.1.0'
-    // implementation 'com.amap.api:3dmap:7.2.0' -- 3dMap与Nav的Api合并
+    // implementation 'com.amap.api:3dmap:7.2.0' -- 3dMap已与Nav的Api合并
     implementation 'com.amap.api:navi-3dmap:7.2.0_3dmap7.2.0'
 
     // LeakCanary

@@ -6,10 +6,11 @@ import com.amap.api.maps.AMap;
 
 public class ConstUtils {
     // HeWeather
-    public static final String HeWeatherDevID = "Your ID";
-    public static final String HeWeatherKey = "Your KEY";
+    public static final String HeWeatherDevID = "Your devID";
+    public static final String HeWeatherKey = "Your devKEY";
 
-    public static final String PixabayKey = "Your KEY";
+    // Pixabay
+    public static final String PixabayKey = "Your devKEY";
 
     public static final String app_sp_name = "AuroraSP";
     public static final String permission_name = "hasPermission";
