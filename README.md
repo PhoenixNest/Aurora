@@ -11,14 +11,14 @@
 
 #### ScreenShot
 
-<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/main.png" alt="Main"  />
+<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/main.png"/>
 
-<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/bottomPannelExpend.png" alt="BottomPannelExpend"  />
+<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/bottomPannelExpend.png"/>
 
-<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/search.png" alt="Search"  />
+<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/search.png"/>
 
 
 
-<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/choose1.png" alt="Choose"  />
+<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/choose1.png"/>
 
-<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/startGPS.png" alt="Open GPS"  />
+<img src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/startGPS.png"/>
