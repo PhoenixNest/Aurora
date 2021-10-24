@@ -29,7 +29,7 @@ This project will automatically accompany `LeakCanary` to detect memory leaks. A
 
 | Notes                   | Screen Shot                                                                                                                                   |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| Main                    | <img style="height: 360px; width: 240px" src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/bottomPannelExpend.png"> |
+| Main                    | <img style="height: 360px; width: 240px" src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/main.png"> |
 | Bottom Panel - Expended | <img style="height: 360px; width: 240px" src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/bottomPannelExpend.png"> |
 | Searching Panel         | <img style="height: 360px; width: 240px" src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/search.png">             |
 | Choose a location       | <img style="height: 360px; width: 240px" src="https://raw.githubusercontent.com/PhoenixNest/Aurora/master/ScreenShot/choose1.png">            |
