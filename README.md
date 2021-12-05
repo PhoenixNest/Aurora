@@ -1,7 +1,5 @@
 # Aurora
 
-## Brief
-
 > This is an EXPERIMENTAL project
 
 Welcome Fork and provide Bug list.
@@ -31,7 +29,7 @@ project has perfected the known memory leaks during development as much as possi
 
 ## ScreenShot
 
-| Function                | Screen Shot                                                                                                                           | Function                | Screen Shot                                                                                                                         |
+| Page                    | Screen Shot                                                                                                                           | Page                    | Screen Shot                                                                                                                         |
 |:-----------------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | Check                   | <img align="center" style="margin:8px" src="https://cdn.jsdelivr.net/gh/PhoenixNest/Aurora@master/ScreenShot/check1.png" />           | Main                    | <img align="center" style="margin:8px" src="https://cdn.jsdelivr.net/gh/PhoenixNest/Aurora@master/ScreenShot/main.png" />           |
 | Bottom Panel - Expended | <img align="center" style="margin:8px" src="https://cdn.jsdelivr.net/gh/PhoenixNest/Aurora@master/ScreenShot/bottomPannelExpend.png"> | Searching Panel         | <img align="center" style="margin:8px" src="https://cdn.jsdelivr.net/gh/PhoenixNest/Aurora@master/ScreenShot/search.png">           | 
