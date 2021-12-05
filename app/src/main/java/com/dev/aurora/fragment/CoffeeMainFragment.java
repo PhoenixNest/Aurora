@@ -60,7 +60,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class CoffeeMainFragment extends Fragment implements View.OnClickListener, LocationSource,
+public class CoffeeMainFragment extends Fragment implements
+        View.OnClickListener,
+        LocationSource,
         AMap.OnMapTouchListener {
 
     private boolean isAlreadyGetNavData = false;

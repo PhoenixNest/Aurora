@@ -64,11 +64,10 @@ public class CoffeeSettingFragment extends Fragment {
         binding.switchSettingCompass.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 edit.putBoolean(ConstUtils.spKEY_isOpenCompass, true);
-                edit.apply();
             } else {
                 edit.putBoolean(ConstUtils.spKEY_isOpenCompass, false);
-                edit.apply();
             }
+            edit.apply();
 
         });
 

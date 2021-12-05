@@ -13,8 +13,7 @@ public class CoffeeNavHeaderFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
+        
         return inflater.inflate(R.layout.coffee_nav_header_fragment, container, false);
     }
 }
